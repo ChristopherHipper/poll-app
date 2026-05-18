@@ -1,0 +1,51 @@
+@use './mixins' as mx;
+@use './variables' as *;
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    scroll-behavior: smooth;
+}
+
+html {
+    font-size: 16px;
+
+    @include mx.respond(md) {
+        font-size: 20px;
+    }
+
+    @include mx.respond(lg) {
+        font-size: 24px;
+    }
+
+}
+
+button {
+    cursor: pointer;
+    border: none;
+}
+
+input:focus,
+textarea:focus {
+    outline: none;
+}
+
+a {
+    text-decoration: none;
+    cursor: pointer;
+}
+
+ul {
+    list-style: none;
+}
+
+p{
+    font-family: 'Mulish';
+}
+
+h2{
+    font-size: 3.25em;
+    font-family: 'Nerko One';
+    color: $primary-orange;
+    text-align: center;
+}

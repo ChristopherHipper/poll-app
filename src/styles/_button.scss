@@ -1,0 +1,23 @@
+@use './variables' as *;
+
+.btn {
+    font-family: 'Nokora';
+    display: inline-block;
+
+    &--primary {
+        color: #221227;
+        font-weight: 700;
+        border-radius: 10px;
+        font-size: 1em;
+        background-color: $secondary-orange;
+        padding: 12px 16px;
+        display: flex;
+        gap: 10px;
+        justify-content: center;
+        align-items: center;
+        transition: 0.2s ease-in-out;
+        &:hover{
+            background-color: $primary-orange;
+        }
+    }
+}

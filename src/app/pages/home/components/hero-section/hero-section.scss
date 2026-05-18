@@ -1,0 +1,122 @@
+@use '../../../../../styles/variables' as *;
+@use '../../../../../styles/mixins' as mx;
+
+.atf {
+    padding-bottom: 80px;
+
+    @include mx.respond(md) {
+        padding-bottom: 80px;
+    }
+
+    @include mx.respond(lg) {
+        padding-bottom: 90px;
+    }
+}
+
+.overview-wrapper {
+    display: flex;
+    flex-direction: column;
+
+    @include mx.respond(lg) {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        grid-template-rows: repeat(2, 1fr);
+    }
+}
+
+.headline {
+    font-family: 'Nerko One';
+    color: $primary-orange;
+    font-size: 4em;
+    line-height: 50px;
+
+    @include mx.respond(md) {
+        line-height: 80px;
+    }
+
+    @include mx.respond(lg) {
+        grid-area: 1 / 1 / 2 / 2;
+    }
+}
+
+.introduction {
+    color: $white-bg;
+    margin-top: 24px;
+    margin-bottom: 54px;
+
+    @include mx.respond(lg) {
+        grid-area: 2 / 1 / 3 / 2;
+    }
+}
+
+.hero-img {
+    margin-top: 24px;
+    background-image: url('/assets/img/hero/hero-img.png');
+    transition: 0.3s ease-in-out;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+
+    height: 250px;
+
+    @include mx.respond(md) {
+        height: 300px;
+    }
+
+    @include mx.respond(lg) {
+        height: 420px;
+        grid-area: 1 / 2 / 4 / 3;
+    }
+
+    &:hover {
+        @include mx.respond(lg) {
+            background-image: url('/assets/img/hero/hero-img-hover.png');
+        }
+
+
+    }
+}
+
+app-primary-button {
+    display: flex;
+    justify-content: center;
+
+    @include mx.respond(md) {
+        justify-content: flex-start;
+    }
+
+    @include mx.respond(lg) {
+        grid-area: 3 / 1 / 4 / 2;
+    }
+}
+
+.new-survey-btn:hover {
+    .add {
+        @include mx.respond(md) {
+            background-image: url('/assets/img/add_circle.png');
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: contain;
+            width: 20px;
+            height: 20px;
+        }
+    }
+
+
+}
+
+.add {
+    transition: all 0.25s ease;
+    background-image: url('/assets/img/add_circle.png');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+    width: 20px;
+    height: 20px;
+
+    @include mx.respond(md) {
+        background-image: unset;
+        width: 0px;
+        height: 0px;
+    }
+}
