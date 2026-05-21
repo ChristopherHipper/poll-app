@@ -57,3 +57,12 @@ Angular CLI does not come with an end-to-end testing framework by default. You c
 ## Additional Resources
 
 For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+
+## Setup
+
+Copy the example environment file:
+
+```bash
+cp src/environments/environment.example.ts src/environments/environment.ts
+
+Then insert your own API keys.

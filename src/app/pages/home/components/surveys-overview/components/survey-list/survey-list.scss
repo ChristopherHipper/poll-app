@@ -1,0 +1,22 @@
+@use '../../../../../../../styles/variables' as *;
+@use '../../../../../../../styles/mixins' as mx;
+
+.filter-section {
+    display: flex;
+    flex-direction: column;
+    gap: 48px;
+    justify-content: space-between;
+    margin-top: 48px;
+    margin-bottom: 24px;
+
+    @include mx.respond(md) {
+        flex-direction: row;
+        margin-top: 40px;
+        margin-bottom: 40px;
+    }
+}
+
+.btn-wrapper {
+    display: flex;
+    gap: 16px;
+}

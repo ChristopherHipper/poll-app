@@ -1,0 +1,71 @@
+@use '../../../../../../../styles/variables' as *;
+@use '../../../../../../..//styles/mixins' as mx;
+
+.ending-soon-section {
+    display: flex;
+    gap: 16px;
+    margin-top: 16px;
+    overflow-x: auto;
+
+    @include mx.respond(lg) {
+        margin-top: 32px;
+        gap: 32px;
+    }
+}
+
+.card {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    background-color: #FAF5FE;
+    border-top-right-radius: 80px;
+    padding: 24px 15px;
+    height: 230px;
+    min-width: 250px;
+    width: 250px;
+    cursor: pointer;
+
+    &:hover {
+        background-color: #F4E9FB;
+    }
+
+
+    @include mx.respond(md) {
+        height: 310px;
+        min-width: 321px;
+        width: 321px;
+        padding: 44px 40px;
+    }
+
+
+    &__category {
+        font-size: 0.875em;
+        font-weight: 600;
+        margin-bottom: 8px;
+
+        @include mx.respond(lg) {
+            font-size: 14px;
+        }
+    }
+
+    &__title {
+        font-size: 1.5em;
+        font-family: 'Mulish';
+
+        @include mx.respond(lg) {
+            font-size: 26px;
+        }
+    }
+
+    &__date {
+        background-color: $secondary-orange;
+        border-top-right-radius: 80px;
+        padding: 3px 6px;
+        max-width: 110px;
+        font-size: 0.75em;
+
+        @include mx.respond(lg) {
+            font-size: 12px;
+        }
+    }
+}
