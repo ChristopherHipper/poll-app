@@ -1,9 +1,23 @@
 <section class="filter-section">
     <div class="btn-wrapper">
-        <button class="btn btn--filter">Acive survey</button>
-        <button class="btn btn--filter btn--filter--default">Past survey</button>
+        <button (click)="setFilter('active')" class="btn btn--filter" [class.default]="sortedBy()==='ended'">Acive
+            survey</button>
+        <button (click)="setFilter('ended')" class="btn btn--filter default"
+            [class.default]="sortedBy()==='active'">Past survey</button>
     </div>
-    <div>
-        Sort by categories
+    <app-dropdown></app-dropdown>
+</section>
+<section class="survey-list">
+    @for (survey of filteredSurveys(); track survey.id) {<div class="card" [routerLink]="['survey', survey.id]" role="link">
+        <div>
+            <p class="card__category">{{ survey.category }}</p>
+            <h4 class="card__title">{{ survey.title }}</h4>
+        </div>
+        @if (survey.rest_days < 0) { <p class="card__date">ended</p>
+            }@else{
+            <p class="card__date">Ends in {{ survey.rest_days}}{{getDay(survey.rest_days)}}</p>
+            }
     </div>
+    }
+
 </section>

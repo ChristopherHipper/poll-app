@@ -4,4 +4,6 @@ export interface Survey {
     description: string;
     category: string;
     end_date: Date;
+    rest_days: number
+    isEnded:boolean
 }

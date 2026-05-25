@@ -1,0 +1,147 @@
+@use '../../../styles/variables' as *;
+
+.dropdown {
+
+  &__btn {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    background-color: unset;
+    font-size: 18px;
+    color: #FFFFFF;
+    font-family: 'Mulish';
+    font-weight: 700;
+    border-radius: 6px;
+    padding: 4px 8px;
+
+    &:hover {
+      background-color: #D9D9D91F;
+
+      .dropdown__icon {
+        fill: $primary-orange;
+      }
+    }
+  }
+
+  &__icon {
+    fill: white;
+  }
+
+  &__menu {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: flex-start;
+    min-width: 196px;
+    max-width: 280px;
+    background-color: #FFFFFF;
+    padding: 8px 4px;
+    border-radius: 6px;
+    margin-top: 4px;
+  }
+
+  &__item {
+    background-color: unset;
+    font-family: 'Mulish';
+    font-weight: 400;
+    font-size: 14px;
+    padding: 4px;
+    border-radius: 6px;
+    color: $dark-bg;
+
+    &:hover {
+      background-color: #F4E9FB;
+    }
+  }
+}
+
+.selected-category {
+  height: 26px;
+  color: $primary-orange;
+  font-weight: 400;
+  font-size: 14px;
+  margin-left: 8px;
+}
+
+.menu-open {
+  background-color: #D9D9D91F;
+
+  .dropdown__icon {
+    fill: $primary-orange;
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.example-menu {
+  display: inline-flex;
+  flex-direction: column;
+  min-width: 180px;
+  max-width: 280px;
+  background-color: rgb(255, 255, 255);
+  padding: 6px 0;
+}
+
+.example-menu .example-menu-item {
+  width: 100%;
+}
+
+hr {
+  width: 100%;
+  color: rgba(0, 0, 0, 0.12);
+}
+
+.example-menu-item,
+.example-standalone-item {
+  background-color: transparent;
+  cursor: pointer;
+  border: none;
+
+  user-select: none;
+  min-width: 64px;
+  line-height: 36px;
+  padding: 0 16px;
+
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  flex: 1;
+}
+
+.example-menu-item:hover {
+  background-color: rgb(208, 208, 208);
+}
+
+.example-menu-item:active {
+  background-color: rgb(170, 170, 170);
+}
+
+.example-standalone-item {
+  background-color: rgb(239, 239, 239);
+}
+
+.example-standalone-item:hover {
+  background-color: rgb(208, 208, 208);
+}
+
+.example-standalone-item[aria-expanded='true'] {
+  background-color: rgb(208, 208, 208);
+}
+
+.example-menu-item[role='menuitemradio'][aria-checked='true'] {
+  background-color: rgb(225, 225, 225);
+}
+
+.example-menu-item[role='menuitemcheckbox'][aria-checked='true'] {
+  background-color: rgb(225, 225, 225);
+}

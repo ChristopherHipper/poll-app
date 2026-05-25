@@ -1,13 +1,13 @@
 <section class="ending-soon-section">
-    @for (survey of endingSoonSurveys(); track survey.id) {
-    <div class="card"  [routerLink]="['survey', survey.id]" role="link">
+    @for (survey of surveys(); track survey.id) {
+    @if (survey.rest_days > 0 && survey.rest_days < 5) { <div class="ending-soon-card" [routerLink]="['survey', survey.id]"
+        role="link">
         <div>
-            <p class="card__category">{{ survey.category }}</p>
-            <h4 class="card__title">{{ survey.title }}</h4>
+            <p class="ending-soon-card__category">{{ survey.category }}</p>
+            <h4 class="ending-soon-card__title">{{ survey.title }}</h4>
         </div>
-        <p class="card__date">Ends in {{ getRestDays(survey.end_date)}}{{getDay(survey.end_date)}}</p>
-    </div>
-    }
-
-
+        <p class="ending-soon-card__date">Ends in {{ survey.rest_days}}{{getDay(survey.rest_days)}}</p>
+        </div>
+        }
+        }
 </section>

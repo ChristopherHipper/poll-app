@@ -8,15 +8,95 @@
     justify-content: space-between;
     margin-top: 48px;
     margin-bottom: 24px;
+    height: 120px;
 
     @include mx.respond(md) {
         flex-direction: row;
         margin-top: 40px;
         margin-bottom: 40px;
+        height: 25px;
     }
 }
 
 .btn-wrapper {
     display: flex;
     gap: 16px;
+}
+
+.default {
+    background-color: #FEE9D4;
+
+    &:hover {
+        background-color: $secondary-orange;
+    }
+}
+
+.survey-list {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+
+    @include mx.respond(lg) {
+        flex-direction: row;
+        flex-wrap: wrap;
+        gap: 16px;
+        max-height: 413px;
+        overflow-y: auto;
+    }
+}
+
+.card {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    background-color: #D9D9D914;
+    border-radius: 5px 50px 5px 5px;
+    padding: 21px 12px;
+    height: 150px;
+    color: #FFFFFF;
+    max-width: 513px;
+    cursor: pointer;
+
+    &:hover {
+        background-color: #D9D9D929;
+    }
+
+    @include mx.respond(lg) {
+        min-width: 513px;
+    }
+
+
+    &__category {
+        font-size: 0.875em;
+        font-weight: 600;
+        margin-bottom: 8px;
+        color: $secondary-orange;
+
+        @include mx.respond(lg) {
+            font-size: 14px;
+        }
+    }
+
+    &__title {
+        font-size: 1.25em;
+        font-family: 'Mulish';
+
+        @include mx.respond(lg) {
+            font-size: 26px;
+        }
+    }
+
+    &__date {
+        background-color: $secondary-orange;
+        border-top-right-radius: 14px;
+        padding: 3px 6px;
+        max-width: 130px;
+        font-size: 0.75em;
+        color: #221227;
+        align-self: end;
+
+        @include mx.respond(lg) {
+            font-size: 12px;
+        }
+    }
 }
