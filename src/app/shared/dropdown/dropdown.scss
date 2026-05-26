@@ -55,7 +55,6 @@
 }
 
 .selected-category {
-  height: 26px;
   color: $primary-orange;
   font-weight: 400;
   font-size: 14px;
@@ -70,6 +69,16 @@
   }
 }
 
+.choosen-category-wrapper {
+  padding-top: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.delete-category{
+  background-color: unset;
+}
 
 
 

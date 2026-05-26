@@ -1,4 +1,4 @@
-import {Component, signal} from '@angular/core';
+import {Component, output, signal} from '@angular/core';
 import {
   CdkMenu,
   CdkMenuItem,
@@ -7,6 +7,7 @@ import {
   CdkMenuItemCheckbox,
   CdkMenuTrigger,
 } from '@angular/cdk/menu';
+import { Survey } from '../interface/survey';
 
 @Component({
   selector: 'app-dropdown',
@@ -17,12 +18,14 @@ import {
   styleUrl: './dropdown.scss',
 })
 export class Dropdown {
-  categries = signal<string[]>(['Team Activities', 'Health & Wellness','Gamind & Entertainment', 'Education & Learning', 'Lifestyle & Preferences', 'Technology & Innovation'])
+  categries = signal<string[]>(['Team Activities', 'Health & Wellness','Gaming & Entertainment', 'Education & Learning', 'Lifestyle & Preferences', 'Technology & Innovation'])
   selectedCategory = signal('')
+  outputCategory = output<string>()
   isOpen = signal(false);
 
   selectCategory(categorie:string){
     this.selectedCategory.set(categorie)
+    this.outputCategory.emit(categorie)
   }
 
 }

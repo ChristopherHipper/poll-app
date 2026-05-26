@@ -5,10 +5,11 @@
         <button (click)="setFilter('ended')" class="btn btn--filter default"
             [class.default]="sortedBy()==='active'">Past survey</button>
     </div>
-    <app-dropdown></app-dropdown>
+    <app-dropdown (outputCategory)="sortByCategory($event)"></app-dropdown>
 </section>
 <section class="survey-list">
-    @for (survey of filteredSurveys(); track survey.id) {<div class="card" [routerLink]="['survey', survey.id]" role="link">
+    @for (survey of filteredSurveys(); track survey.id) {<div class="card" [routerLink]="['survey', survey.id]"
+        role="link">
         <div>
             <p class="card__category">{{ survey.category }}</p>
             <h4 class="card__title">{{ survey.title }}</h4>
