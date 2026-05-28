@@ -1,0 +1,77 @@
+<main class="new-survey-wrapper">
+    <figure class="logo">
+        <app-logo [variant]="'purple'"></app-logo>
+    </figure>
+    <section class="new-survey-form">
+        <header class="form-header">
+            <div>
+                <app-status [status]="'Draft'"></app-status>
+                <h2 class="form-headline">Create new survey</h2>
+            </div>
+            <app-cancel-button>
+                <button fxHide.xs class="btn btn--cancel" [routerLink]="''">
+                    <p class="btn-text">Cancel</p>
+
+                    <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path
+                            d="M6.575 7.975L1.675 12.875C1.49167 13.0583 1.25833 13.15 0.975 13.15C0.691667 13.15 0.458333 13.0583 0.275 12.875C0.0916667 12.6917 0 12.4583 0 12.175C0 11.8917 0.0916667 11.6583 0.275 11.475L5.175 6.575L0.275 1.675C0.0916667 1.49167 0 1.25833 0 0.975C0 0.691667 0.0916667 0.458333 0.275 0.275C0.458333 0.0916667 0.691667 0 0.975 0C1.25833 0 1.49167 0.0916667 1.675 0.275L6.575 5.175L11.475 0.275C11.6583 0.0916667 11.8917 0 12.175 0C12.4583 0 12.6917 0.0916667 12.875 0.275C13.0583 0.458333 13.15 0.691667 13.15 0.975C13.15 1.25833 13.0583 1.49167 12.875 1.675L7.975 6.575L12.875 11.475C13.0583 11.6583 13.15 11.8917 13.15 12.175C13.15 12.4583 13.0583 12.6917 12.875 12.875C12.6917 13.0583 12.4583 13.15 12.175 13.15C11.8917 13.15 11.6583 13.0583 11.475 12.875L6.575 7.975Z"
+                            fill="#FEFDFF" />
+                    </svg>
+                </button>
+            </app-cancel-button>
+        </header>
+
+
+
+
+
+
+        <form [formGroup]="surveyForm" (ngSubmit)="formSubmit()">
+            @if(showSuccessMessage()){
+            <div class="success-wrapper">
+                <div class="success-msg">Your survey is now published!</div>
+            </div>
+            }
+
+
+            <fieldset>
+                @if (invalidName){
+                <label class="error" for="name">Survey name is required</label>
+                } @else{
+                <label for="name">Survey name</label>
+                }
+                <div>
+                    <input class="inputfield" [class.input-error]="invalidName" id="name" type="text"
+                        formControlName="name" />
+                </div>
+            </fieldset>
+
+
+            <app-dropdown (outputCategory)="getCategory($event)"></app-dropdown>
+
+            <fieldset>
+                <label for="date">Set end date</label>
+                <div>
+                    <input class="inputfield messagefield" id="date" type="date" formControlName="date" />
+                </div>
+            </fieldset>
+
+            <fieldset>
+                <label for="text">Description text</label>
+                <div>
+                    <textarea class="inputfield messagefield" name="text" id="text"
+                        formControlName="message"></textarea>
+                </div>
+            </fieldset>
+        </form>
+
+
+
+
+
+
+
+
+
+    </section>
+</main>

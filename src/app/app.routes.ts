@@ -1,7 +1,7 @@
 import { Routes } from '@angular/router';
 import { Home } from './pages/home/home';
-import { Survey } from './pages/survey/survey';
-import { NewSurvey } from './pages/new-survey/new-survey';
+import { SurveyDetail } from './pages/survey-detail/survey-detail';
+import { SurveyForm } from './pages/survey-form/survey-form';
 
 export const routes: Routes = [
     {
@@ -10,10 +10,10 @@ export const routes: Routes = [
     },
     {
         path: 'survey/:id',
-        component: Survey
+        component: SurveyDetail
     },
     {
         path: 'New-Survey',
-        component: NewSurvey
+        component: SurveyForm
     },
 ];

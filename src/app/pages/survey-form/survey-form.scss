@@ -1,0 +1,61 @@
+@use '../../../styles/variables' as *;
+@use '../../../styles/mixins' as mx;
+
+.new-survey-wrapper {
+    background-color: $white-bg;
+    padding: 41px max(calc(50% - 720px), 0px);
+    padding-bottom: 80px;
+
+    @include mx.respond(md) {
+        padding: 41px max(calc(50% - 720px), 86px);
+        padding-bottom: 80px;
+    }
+
+    @include mx.respond(lg) {
+        padding: 41px max(calc(50% - 720px), 111px);
+        padding-bottom: 90px;
+    }
+}
+
+.logo {
+    padding-bottom: 54px;
+    padding-left: 16px;
+
+    @include mx.respond(md) {
+        padding-left: 0px;
+    }
+}
+
+.new-survey-form {
+    background-color: $dark-bg;
+    border-radius: 5px 100px 5px 5px;
+    padding: 40px 25px;
+
+    @include mx.respond(lg) {
+        padding: 40px 60px;
+    }
+}
+
+.form-header {
+    display: flex;
+    justify-content: space-between;
+}
+
+.form-headline {
+    line-height: 42px;
+    text-align: start;
+    padding-top: 16px;
+
+    @include mx.respond(md) {
+        line-height: unset;
+        align-items: end;
+    }
+}
+
+.btn-text {
+    display: none;
+
+    @include mx.respond(md) {
+        display: flex;
+    }
+}

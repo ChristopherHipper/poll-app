@@ -49,3 +49,14 @@ h2{
     color: $primary-orange;
     text-align: center;
 }
+
+input,
+textarea {
+    border: none;
+    scrollbar-width: thin;
+}
+
+input:focus,
+textarea:focus {
+    outline: none;
+}
