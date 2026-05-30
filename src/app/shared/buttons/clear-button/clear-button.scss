@@ -1,0 +1,23 @@
+@use '../../../../styles/mixins' as mx;
+@use '../../../../styles/variables' as *;
+.clear-icon {
+    fill: #FFFFFF;
+}
+
+.clear-input {
+    background-color: transparent;
+    border-radius: 3px;
+    padding-top: 3px;
+
+    @include mx.respond(lg) {
+        &:hover {
+            background-color: #FFB77099;
+
+            .clear-icon {
+                fill: $dark-bg;
+            }
+        }
+    }
+
+
+}

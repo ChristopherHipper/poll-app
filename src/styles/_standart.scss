@@ -37,6 +37,7 @@ a {
 
 ul {
     list-style: none;
+    padding: 0;
 }
 
 p{
@@ -51,9 +52,11 @@ h2{
 }
 
 input,
-textarea {
+textarea,
+fieldset {
     border: none;
     scrollbar-width: thin;
+    width: clamp(250px, 100%, 430px);
 }
 
 input:focus,
