@@ -1,12 +1,11 @@
-import { Component, computed, inject, signal } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { Logo } from "../../shared/logo/logo";
 import { RouterLink } from "@angular/router";
 import { CancelButton } from "../../shared/buttons/cancel-button/cancel-button";
 import { Status } from "../../shared/status/status";
-import { FormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, Validators, ReactiveFormsModule, FormArray, FormGroup } from '@angular/forms';
 import { Dropdown } from "../../shared/dropdown/dropdown";
 import { ClearButton } from "../../shared/buttons/clear-button/clear-button";
-import { Question } from '../../shared/interface/question';
 
 @Component({
   selector: 'app-survey-form',
@@ -17,49 +16,88 @@ import { Question } from '../../shared/interface/question';
 export class SurveyForm {
   formbuilder = inject(FormBuilder);
   showSuccessMessage = signal(false);
-  questions = signal<Question[]>([
-    {
-      id: 0,
-      title: '',
-    },
-  ]);
 
   surveyForm = this.formbuilder.group({
-    name: ['', [Validators.required, Validators.minLength(1)]],
-    description: ['', []],
-    date: ['', []],
+    name: ['', [Validators.required]],
+    description: [''],
+    date: [''],
+    questions: this.formbuilder.array([
+      this.createQuestion()
+    ])
   });
+
+  get questions(): FormArray {
+    return this.surveyForm.get('questions') as FormArray;
+  };
+
+  getAnswers(questionIndex: number): FormArray {
+    return this.questions.at(questionIndex).get('answers') as FormArray;
+  };
+
+  createQuestion(): FormGroup {
+    return this.formbuilder.group({
+      question: ['', Validators.required],
+      answers: this.formbuilder.array([
+        this.createAnswer(),
+        this.createAnswer()
+      ])
+    });
+  };
+
+  createAnswer(): FormGroup {
+    return this.formbuilder.group({
+      answer: ['', Validators.required]
+    });
+  };
+
+  addAnswer(questionIndex: number) {
+    this.getAnswers(questionIndex).push(this.createAnswer());
+  };
+
+  addQuestion() {
+    this.questions.push(this.createQuestion());
+  };
+
+  removeQuestion(index: number) {
+    if (this.questions.length == 1) {
+      this.clearQuestion(index);
+      return;
+    };
+    this.questions.removeAt(index);
+  };
+
+  removeAnswer(questionIndex: number, answerIndex: number) {
+    if (this.getAnswers(questionIndex).length == 1) {
+      this.clearAnswer(questionIndex, answerIndex);
+      return;
+    };
+    this.getAnswers(questionIndex).removeAt(answerIndex);
+  };
+
+  clearQuestion(index: number) {
+    this.questions.at(index).get('question')?.setValue('');
+  };
+
+  clearAnswer(questionIndex: number, answerIndex: number) {
+    this.getAnswers(questionIndex).at(answerIndex).get('answer')?.setValue('');
+  };
+
+
+  formSubmit() { };
+
+  getCategory(value: string) { }
+
+  clearField(controlName: "name" | "description" | "date") {
+    this.surveyForm.controls[controlName].setValue('');
+  };
 
   get invalidName() {
     return !this.surveyForm.get('name')?.valid && this.surveyForm.get('name')?.touched;
   };
 
-
-  formSubmit() { }
-
-  getCategory(value: string) { }
-
-  clearField(controlName: keyof typeof this.surveyForm.controls) {
-    this.surveyForm.controls[controlName].setValue('')
-  }
-
-  increaseQuestions() {
-
-  }
-
-  removeQuestion(questionIndex: number) {
-    if (questionIndex == 0) {
-      console.log('clear erste frage');
-
-    } else {
-      this.deleteQuestion(questionIndex)
-      console.log('lösche frage an der stelle', questionIndex);
-    }
-  }
-
-  deleteQuestion(index: number) {
-    this.questions.update(questions => questions.filter(question => question.id === index));
-  }
+  getAnswerLabel(index: number): string {
+    return String.fromCharCode(65 + index);
+  };
 
 }
 

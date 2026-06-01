@@ -8,6 +8,7 @@
     background-color: transparent;
     border-radius: 3px;
     padding-top: 3px;
+    margin-right: 18px;
 
     @include mx.respond(lg) {
         &:hover {
