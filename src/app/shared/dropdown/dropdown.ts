@@ -1,4 +1,4 @@
-import {Component, output, signal} from '@angular/core';
+import {Component, input, output, signal} from '@angular/core';
 import {
   CdkMenu,
   CdkMenuItem,
@@ -22,6 +22,7 @@ export class Dropdown {
   selectedCategory = signal('')
   outputCategory = output<string>()
   isOpen = signal(false);
+  type = input('')
 
   selectCategory(categorie:string){
     this.selectedCategory.set(categorie)

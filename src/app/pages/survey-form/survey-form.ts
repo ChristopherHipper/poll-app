@@ -1,11 +1,13 @@
 import { Component, inject, signal } from '@angular/core';
 import { Logo } from "../../shared/logo/logo";
-import { RouterLink } from "@angular/router";
+import { Router, RouterLink } from "@angular/router";
 import { CancelButton } from "../../shared/buttons/cancel-button/cancel-button";
 import { Status } from "../../shared/status/status";
 import { FormBuilder, Validators, ReactiveFormsModule, FormArray, FormGroup } from '@angular/forms';
 import { Dropdown } from "../../shared/dropdown/dropdown";
 import { ClearButton } from "../../shared/buttons/clear-button/clear-button";
+import { Surveys } from '../../shared/service/surveys';
+import { Surveymodel } from '../../shared/model/surveymodel';
 
 @Component({
   selector: 'app-survey-form',
@@ -16,11 +18,15 @@ import { ClearButton } from "../../shared/buttons/clear-button/clear-button";
 export class SurveyForm {
   formbuilder = inject(FormBuilder);
   showSuccessMessage = signal(false);
+  maxAnswers = signal(false);
+  router = inject(Router)
+  surveyService = inject(Surveys);
 
   surveyForm = this.formbuilder.group({
-    name: ['', [Validators.required]],
+    title: ['', [Validators.required]],
     description: [''],
     date: [''],
+    category: ['', [Validators.required]],
     questions: this.formbuilder.array([
       this.createQuestion()
     ])
@@ -37,6 +43,7 @@ export class SurveyForm {
   createQuestion(): FormGroup {
     return this.formbuilder.group({
       question: ['', Validators.required],
+      allowMultipleAnswers: [false],
       answers: this.formbuilder.array([
         this.createAnswer(),
         this.createAnswer()
@@ -51,6 +58,10 @@ export class SurveyForm {
   };
 
   addAnswer(questionIndex: number) {
+    if (this.getAnswers(questionIndex).length > 5) {
+      return
+    }
+    this.maxAnswers.set(true);
     this.getAnswers(questionIndex).push(this.createAnswer());
   };
 
@@ -82,22 +93,40 @@ export class SurveyForm {
     this.getAnswers(questionIndex).at(answerIndex).get('answer')?.setValue('');
   };
 
+  getCategory(value: string) {
+    this.surveyForm.controls['category'].setValue(value);
+  }
 
-  formSubmit() { };
-
-  getCategory(value: string) { }
-
-  clearField(controlName: "name" | "description" | "date") {
+  clearField(controlName: "title" | "description" | "date") {
     this.surveyForm.controls[controlName].setValue('');
   };
 
-  get invalidName() {
-    return !this.surveyForm.get('name')?.valid && this.surveyForm.get('name')?.touched;
+  get invalidTitle() {
+    return !this.surveyForm.get('title')?.valid && this.surveyForm.get('title')?.touched;
+  };
+
+  invalidQuestion(index: number) {
+    return !this.questions.at(index).get('question')?.valid && this.questions.at(index).get('question')?.touched;
+  };
+
+  invalidAnswer(questionIndex: number, answerIndex: number) {
+    return !this.getAnswers(questionIndex).at(answerIndex).get('answer')?.valid && this.getAnswers(questionIndex).at(answerIndex).get('answer')?.touched
   };
 
   getAnswerLabel(index: number): string {
     return String.fromCharCode(65 + index);
   };
+
+  formSubmit() {
+    console.log(this.surveyForm.value);
+    if (this.surveyForm.valid) {
+
+    }
+  };
+
+    getSurvey() {
+    
+  }
 
 }
 
