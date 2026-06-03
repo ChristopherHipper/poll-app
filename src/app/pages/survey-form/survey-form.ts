@@ -22,11 +22,11 @@ export class SurveyForm {
   router = inject(Router)
   surveyService = inject(Surveys);
 
-  surveyForm = this.formbuilder.group({
+  surveyForm = this.formbuilder.nonNullable.group({
     title: ['', [Validators.required]],
     description: [''],
-    date: [''],
-    category: ['', [Validators.required]],
+    end_date: [''],
+    category: ['',  [Validators.required]],
     questions: this.formbuilder.array([
       this.createQuestion()
     ])
@@ -42,7 +42,7 @@ export class SurveyForm {
 
   createQuestion(): FormGroup {
     return this.formbuilder.group({
-      question: ['', Validators.required],
+      question: ['', [Validators.required]],
       allowMultipleAnswers: [false],
       answers: this.formbuilder.array([
         this.createAnswer(),
@@ -53,7 +53,7 @@ export class SurveyForm {
 
   createAnswer(): FormGroup {
     return this.formbuilder.group({
-      answer: ['', Validators.required]
+      answer: ['', {nonNullable: true, validators:[Validators.required]}]
     });
   };
 
@@ -97,7 +97,7 @@ export class SurveyForm {
     this.surveyForm.controls['category'].setValue(value);
   }
 
-  clearField(controlName: "title" | "description" | "date") {
+  clearField(controlName: "title" | "description" | "end_date") {
     this.surveyForm.controls[controlName].setValue('');
   };
 
@@ -118,14 +118,21 @@ export class SurveyForm {
   };
 
   formSubmit() {
-    console.log(this.surveyForm.value);
     if (this.surveyForm.valid) {
-
+      //this.surveyService.addSurvey(this.getSurvey())
+      this.surveyForm.reset()
+      this.showSuccessMessage.set(true);
+      setTimeout(()=>{
+        this.showSuccessMessage.set(false);
+        this.router.navigate([''])
+      },2000);
+      
     }
   };
 
-    getSurvey() {
-    
+
+  getSurvey() {
+    return new Surveymodel(this.surveyForm.value)
   }
 
 }

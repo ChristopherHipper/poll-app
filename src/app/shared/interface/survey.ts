@@ -1,9 +1,12 @@
+import { Question } from "./question";
+
 export interface Survey {
     id: number;
     title: string;
     description: string;
     category: string;
-    end_date: Date;
-    rest_days: number
-    isEnded:boolean
+    end_date: string;
+    rest_days: number;
+    isEnded:boolean;
+    questions: Question[]
 }

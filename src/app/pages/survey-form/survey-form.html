@@ -21,11 +21,7 @@
         </header>
 
         <form id="surveyForm" class="survey-form" [formGroup]="surveyForm" (ngSubmit)="formSubmit()">
-            @if(showSuccessMessage()){
-            <div class="success-wrapper">
-                <p class="success-msg">Your survey is now published!</p>
-            </div>
-            }
+            <p [class.success-show]="showSuccessMessage()" class="success-msg">Your survey is now published!</p>
             <section class="fixed-input-fields">
                 <div>
                     <fieldset class="input-wrapper">
@@ -41,9 +37,9 @@
                     <div>
                         <app-dropdown [type]="'Choose Category'" (outputCategory)="getCategory($event)"></app-dropdown>
                         <fieldset class="input-wrapper label-date">
-                            <label for="date">Set end date (optional)</label>
-                            <app-clear-button class="clear-button" (click)="clearField('date')"></app-clear-button>
-                            <input class="input-date" id="date" type="date" formControlName="date" />
+                            <label for="end_date">Set end date (optional)</label>
+                            <app-clear-button class="clear-button" (click)="clearField('end_date')"></app-clear-button>
+                            <input class="input-date" id="end_date" type="date" formControlName="end_date" />
                         </fieldset>
                     </div>
                 </div>
@@ -123,11 +119,11 @@
                             </svg>
                         </button>
                         @if (maxAnswers()) {
-                            <p class="mulitple-answers-label">You can add up to 6 answers.</p>
+                        <p class="mulitple-answers-label">You can add up to 6 answers.</p>
                         }@else {
-                            <p></p>
+                        <p></p>
                         }
-                        
+
                     </div>
                 </fieldset>
                 }

@@ -1,3 +1,4 @@
+import { Question } from '../interface/question';
 import { Survey } from '../interface/survey';
 
 
@@ -6,28 +7,31 @@ export class Surveymodel implements Survey {
     title: string;
     description: string;
     category: string;
-    end_date: Date;
-    rest_days: number
-    isEnded:boolean
+    end_date: string;
+    rest_days: number;
+    isEnded: boolean;
+    questions: Question[]
+
 
     constructor(data: Partial<Survey> = {}) {
         this.id = data.id ?? 0;
         this.title = data.title ?? "";
         this.description = data.description ?? "";
-        this.category = data.category ?? '';
-        this.end_date = data.end_date ?? new Date();
+        this.category = data.category ?? "";
+        this.end_date = data.end_date ?? "";
         this.rest_days = data.rest_days ?? 0;
         this.isEnded = data.isEnded ?? false;
+        this.questions = data.questions ?? []
     }
 
-
-    // damit wir nicht eine vordefinierte ID in supabase pushen. Die soll supabase selber erstellen. Deswegen ein JSON ohne ID
     getCleanJson() {
         return {
-            name: this.title,
+            title: this.title,
             description: this.description,
             category: this.category,
             end_date: this.end_date,
         }
     }
+
+
 }
