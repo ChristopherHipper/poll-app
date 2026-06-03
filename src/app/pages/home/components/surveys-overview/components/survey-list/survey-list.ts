@@ -33,11 +33,21 @@ export class SurveyList {
     this.category.set(value);
   };
 
-  getDay(days: number) {
-    if (days > 1) {
-      return ' days';
+  getDays(days:number){
+    if (!days) {
+      return ''
     } else {
-      return ' day';
+      return 
+    }
+  }
+
+  getDay(days: number) {
+    if (!days) {
+      return ' never'
+    } else if (days > 1) {
+      return 'in '+ days + ' days';
+    } else {
+      return 'in '+ days + ' day';
     };
   };
 

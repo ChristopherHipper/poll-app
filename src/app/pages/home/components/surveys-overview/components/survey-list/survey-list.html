@@ -16,7 +16,7 @@
         </div>
         @if (survey.rest_days < 0) { <p class="card__date">ended</p>
             }@else{
-            <p class="card__date">Ends in {{ survey.rest_days}}{{getDay(survey.rest_days)}}</p>
+            <p class="card__date">Ends {{getDay(survey.rest_days)}}</p>
             }
     </div>
     }
