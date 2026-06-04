@@ -12,7 +12,7 @@ export class EndingSoonSurveys {
   surveyService = inject(Surveys);
   restDays = signal(0);
 
-  surveys = this.surveyService.surveyList;
+  surveys = this.surveyService.surveys;
 
   getDay(days:number){
     if (days > 1) {

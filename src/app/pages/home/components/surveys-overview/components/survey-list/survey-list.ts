@@ -11,7 +11,7 @@ import { RouterLink } from "@angular/router";
 })
 export class SurveyList {
   surveyService = inject(Surveys);
-  surveys = this.surveyService.surveyList;
+  surveys = this.surveyService.surveys;
   sortedBy = signal<'active' | 'ended'>('active');
   category = signal('');
 
@@ -32,14 +32,6 @@ export class SurveyList {
   sortByCategory(value: string) {
     this.category.set(value);
   };
-
-  getDays(days:number){
-    if (!days) {
-      return ''
-    } else {
-      return 
-    }
-  }
 
   getDay(days: number) {
     if (!days) {

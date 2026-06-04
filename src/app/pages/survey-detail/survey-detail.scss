@@ -1,0 +1,143 @@
+@use '../../../styles/variables' as *;
+@use '../../../styles/mixins' as mx;
+
+p {
+    color: $dark-bg;
+}
+
+.survey-detail-wrapper {
+    background-color: $white-bg;
+    padding: 41px max(calc(50% - 720px), 16px);
+    padding-bottom: 80px;
+
+    @include mx.respond(md) {
+        padding: 41px max(calc(50% - 720px), 86px);
+        padding-bottom: 80px;
+    }
+
+    @include mx.respond(lg) {
+        padding: 41px max(calc(50% - 720px), 111px);
+        padding-bottom: 90px;
+    }
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+}
+
+.btn-desktop {
+    height: 48px;
+    display: none;
+
+    @include mx.respond(md) {
+        display: inline;
+    }
+}
+
+.btn-mobile {
+    display: flex;
+    height: 32px;
+    width: 39px;
+    padding: 0;
+
+    @include mx.respond(md) {
+        display: none;
+    }
+}
+
+.detail {
+    background-color: #8E70991A;
+    border-top-right-radius: 100px;
+    padding: 40px 12px;
+
+
+    @include mx.respond(lg) {
+        padding: 40px 40px;
+    }
+
+    &__header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding-right: 13px;
+    }
+
+    &__info {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding-top: 16px;
+        color: $dark-bg;
+    }
+
+    &__headline {
+        text-align: start;
+    }
+
+
+}
+
+
+.questions {
+    display: flex;
+    flex-wrap: wrap;
+    padding-top: 40px;
+    gap: 24px;
+
+
+    &__title,
+    &__counter {
+        font-family: 'Mulish';
+        font-weight: 700;
+        font-size: 1.15em;
+        color: $dark-bg;
+    }
+
+    &__wrapper {
+        display: flex;
+        align-items: flex-start;
+    }
+
+    &__info {
+        font-size: 14px;
+        color: $dark-bg;
+        padding-left: 18px;
+
+        @include mx.respond(lg) {
+            padding-left: 24px;
+        }
+    }
+
+    &__answer-wrapper {
+        padding: 24px 0;
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+    }
+}
+
+.answers {
+
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 16px;
+    padding-left: 16px;
+    cursor: pointer;
+
+    &__input {
+        width: 15px;
+        height: 15px;
+        cursor: pointer;
+        margin: 0;
+    }
+
+    &__title {
+        color: $dark-bg;
+        cursor: pointer;
+        height: unset;
+        padding: 0;
+        font-weight: 400;
+    }
+}
