@@ -30,28 +30,77 @@
         <h2 class="detail__headline">{{singleSurvey().title}}</h2>
         <p>{{singleSurvey().description}}</p>
 
-        <form class="questions">
-            @for (question of singleSurvey().questions; track question.id; let i = $index) {
-            <fieldset>
-                <div class="questions__wrapper">
-                    <span class="questions__counter">{{i+1}}.</span>
-                    <legend class="questions__title"> {{question.question}}</legend>
-                </div>
-                @if (question.allowMultipleAnswers) {
-                <p class="questions__info">More than one answers are possible.</p>
-                }
-                <div class="questions__answer-wrapper">
-                    @for (answers of question.answers; track $index) {
-                    <div class="answers">
-                        <input class="answers__input" type="checkbox" id="{{question.id}}" name="{{question.id}}">
-                        <label class="answers__title" for="{{question.id}}">{{answers.answer}}</label>
+        <form  id="singleSurvey" (ngSubmit)="updateSurvey()">
+            <div class="questions">
+                @for (question of singleSurvey().questions; track question.id; let i = $index) {
+                <fieldset>
+                    <div class="questions__wrapper">
+                        <span class="questions__counter">{{i+1}}.</span>
+                        <legend class="questions__title"> {{question.question}}</legend>
+                    </div>
+                    @if (question.allowMultipleAnswers) {
+                    <p class="questions__info">More than one answers are possible.</p>
+                    }
+                    <div class="questions__answer-wrapper">
+                        @for (answers of question.answers; track $index) {
+                        <div class="answers">
+                            <div class="checkbox-wrapper-46">
+                                <input class="answers__input inp-cbx"
+                                    [type]="question.allowMultipleAnswers ? 'checkbox' : 'radio'"
+                                    id="{{$index}}-{{question.id}}" name="{{question.id}}" value="{{answers.answer}}">
+
+                                <label class="cbx" for="{{$index}}-{{question.id}}">
+                                    <span>
+                                        <svg width="12px" height="10px" viewbox="0 0 12 10">
+                                            <polyline points="1.5 6 4.5 9 10.5 1"></polyline>
+                                        </svg>
+                                    </span>
+                                </label>
+                            </div>
+                            <label class="answers__title" for="{{$index}}-{{question.id}}">
+                                <span class="answers__index">{{getAnswerLabel($index)}}.</span>
+                                {{answers.answer}}
+                            </label>
+                        </div>
+
+                        }
                     </div>
 
-                    }
-                </div>
-
-            </fieldset>
-            }
+                </fieldset>
+                }
+            </div>
+            <button form="singleSurvey" type="submit" class="publish-btn btn btn--primary">
+                <span>Complete</span>
+                <span class="text">survey</span>
+                <span class="add">
+                </span>
+            </button>
         </form>
     </main>
+
+    <section class="results">
+        <h3 class="results__headline">Survey results <span>LIVE</span></h3>
+
+
+        @for (question of singleSurvey().questions; track question.id; let i = $index) {
+                <section>
+                    <div class="questions__wrapper">
+                        <span class="questions__counter">{{i+1}}.</span>
+                        <p class="questions__title"> {{question.question}}</p>
+                    </div>
+                    <div class="questions__answer-wrapper">
+                        @for (answers of question.answers; track $index) {
+                        <div class="answers">
+                            <label class="answers__title" for="{{$index}}-{{question.id}}">
+                                <span class="answers__index">{{getAnswerLabel($index)}}.</span>
+                                {{answers.votes}}
+                            </label>
+                        </div>
+
+                        }
+                    </div>
+
+                </section>
+                }
+    </section>
 </section>

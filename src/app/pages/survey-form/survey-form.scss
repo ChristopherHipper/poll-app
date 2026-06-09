@@ -236,8 +236,11 @@
 }
 
 .checkbox-wrapper-46 input[type="checkbox"] {
-    display: none;
-    visibility: hidden;
+    position: absolute;
+    opacity: 0;
+    width: 15px;
+    height: 15px;
+    overflow: hidden;
 }
 
 .checkbox-wrapper-46 .cbx {
@@ -388,7 +391,7 @@
     width: min(90%, 330px);
 }
 
-.success-show{
+.success-show {
     transform: translateX(-50%) translateY(0);
     opacity: 1;
 }

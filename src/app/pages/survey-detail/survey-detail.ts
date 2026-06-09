@@ -5,9 +5,11 @@ import { Status } from "../../shared/status/status";
 import { Surveys } from '../../shared/service/surveys';
 import { DatePipe } from '@angular/common';
 
+import { FormBuilder, Validators, ReactiveFormsModule, FormArray, FormGroup } from '@angular/forms';
+
 @Component({
   selector: 'app-survey-detail',
-  imports: [Logo, RouterLink, Status, DatePipe],
+  imports: [Logo, RouterLink, Status, DatePipe, ReactiveFormsModule],
   templateUrl: './survey-detail.html',
   styleUrl: './survey-detail.scss',
 })
@@ -18,11 +20,18 @@ export class SurveyDetail {
   singleSurvey = this.surveyService.singleSurvey
 
   ngOnInit() {
-    console.log(this.surveyService.surveys());
-    
     const currentid = this.route.snapshot.paramMap.get('id');
     if (!currentid) return;
     this.surveyService.getSurveyById(+currentid)
   };
+
+  getAnswerLabel(index: number): string {
+    return String.fromCharCode(65 + index);
+  };
+
+  updateSurvey(){
+    console.log('update');
+    
+  }
 
 }
