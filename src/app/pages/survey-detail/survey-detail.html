@@ -5,102 +5,108 @@
             Create survey
         </button>
     </header>
+    <main class="detail-content">
+        <section class="detail">
+            <header class="detail__header">
+                <app-status [status]="'Published'"></app-status>
+                <button [routerLink]="''" class="btn btn--primary btn-mobile">
+                    <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path
+                            d="M6.575 7.975L1.675 12.875C1.49167 13.0583 1.25833 13.15 0.975 13.15C0.691667 13.15 0.458333 13.0583 0.275 12.875C0.0916667 12.6917 0 12.4583 0 12.175C0 11.8917 0.0916667 11.6583 0.275 11.475L5.175 6.575L0.275 1.675C0.0916667 1.49167 0 1.25833 0 0.975C0 0.691667 0.0916667 0.458333 0.275 0.275C0.458333 0.0916667 0.691667 0 0.975 0C1.25833 0 1.49167 0.0916667 1.675 0.275L6.575 5.175L11.475 0.275C11.6583 0.0916667 11.8917 0 12.175 0C12.4583 0 12.6917 0.0916667 12.875 0.275C13.0583 0.458333 13.15 0.691667 13.15 0.975C13.15 1.25833 13.0583 1.49167 12.875 1.675L7.975 6.575L12.875 11.475C13.0583 11.6583 13.15 11.8917 13.15 12.175C13.15 12.4583 13.0583 12.6917 12.875 12.875C12.6917 13.0583 12.4583 13.15 12.175 13.15C11.8917 13.15 11.6583 13.0583 11.475 12.875L6.575 7.975Z"
+                            fill="#35273A" />
+                    </svg>
+                </button>
+            </header>
+            <div class="detail__info">
+                @if (singleSurvey().rest_days > 0) {
+                <p>Ends on {{singleSurvey().end_date | date:'dd.MM.yyyy'}}</p>
+                }@else if (!singleSurvey().end_date) {
+                <p>Ends never</p>
+                }@else {
+                <p>ended</p>
+                }
+                <p>Category: {{singleSurvey().category}}</p>
+            </div>
+            <h2 class="detail__headline">{{singleSurvey().title}}</h2>
+            <p>{{singleSurvey().description}}</p>
 
-    <main class="detail">
-        <header class="detail__header">
-            <app-status [status]="'Published'"></app-status>
-            <button [routerLink]="''" class="btn btn--primary btn-mobile">
-                <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path
-                        d="M6.575 7.975L1.675 12.875C1.49167 13.0583 1.25833 13.15 0.975 13.15C0.691667 13.15 0.458333 13.0583 0.275 12.875C0.0916667 12.6917 0 12.4583 0 12.175C0 11.8917 0.0916667 11.6583 0.275 11.475L5.175 6.575L0.275 1.675C0.0916667 1.49167 0 1.25833 0 0.975C0 0.691667 0.0916667 0.458333 0.275 0.275C0.458333 0.0916667 0.691667 0 0.975 0C1.25833 0 1.49167 0.0916667 1.675 0.275L6.575 5.175L11.475 0.275C11.6583 0.0916667 11.8917 0 12.175 0C12.4583 0 12.6917 0.0916667 12.875 0.275C13.0583 0.458333 13.15 0.691667 13.15 0.975C13.15 1.25833 13.0583 1.49167 12.875 1.675L7.975 6.575L12.875 11.475C13.0583 11.6583 13.15 11.8917 13.15 12.175C13.15 12.4583 13.0583 12.6917 12.875 12.875C12.6917 13.0583 12.4583 13.15 12.175 13.15C11.8917 13.15 11.6583 13.0583 11.475 12.875L6.575 7.975Z"
-                        fill="#35273A" />
-                </svg>
-            </button>
-        </header>
-        <div class="detail__info">
-            @if (singleSurvey().rest_days > 0) {
-            <p>Ends on {{singleSurvey().end_date | date:'dd.MM.yyyy'}}</p>
-            }@else if (!singleSurvey().end_date) {
-            <p>Ends never</p>
-            }@else {
-            <p>ended</p>
-            }
-            <p>Category: {{singleSurvey().category}}</p>
-        </div>
-        <h2 class="detail__headline">{{singleSurvey().title}}</h2>
-        <p>{{singleSurvey().description}}</p>
+            <form id="singleSurvey" (ngSubmit)="updateSurvey()">
+                <div class="questions">
+                    @for (question of singleSurvey().questions; track question.id; let questionIndex = $index) {
+                    <fieldset>
+                        <div class="questions__wrapper">
+                            <span class="questions__counter">{{questionIndex+1}}.</span>
+                            <legend class="questions__title"> {{question.question}}</legend>
+                        </div>
+                        @if (question.allowMultipleAnswers) {
+                        <p class="questions__info">More than one answers are possible.</p>
+                        }
+                        <div class="questions__answer-wrapper">
+                            @for (answers of question.answers; track answers.id; let answerIndex = $index) {
+                            <div class="answers">
+                                <div class="checkbox-wrapper-46">
+                                    <input (change)="updateVotes($event,answers, question.answers )" class="answers__input inp-cbx"
+                                        [type]="question.allowMultipleAnswers ? 'checkbox' : 'radio'"
+                                        id="{{$index}}-{{question.id}}" name="{{question.id}}"
+                                        value="{{answers.answer}}">
 
-        <form  id="singleSurvey" (ngSubmit)="updateSurvey()">
-            <div class="questions">
-                @for (question of singleSurvey().questions; track question.id; let i = $index) {
-                <fieldset>
-                    <div class="questions__wrapper">
-                        <span class="questions__counter">{{i+1}}.</span>
-                        <legend class="questions__title"> {{question.question}}</legend>
-                    </div>
-                    @if (question.allowMultipleAnswers) {
-                    <p class="questions__info">More than one answers are possible.</p>
-                    }
-                    <div class="questions__answer-wrapper">
-                        @for (answers of question.answers; track $index) {
-                        <div class="answers">
-                            <div class="checkbox-wrapper-46">
-                                <input class="answers__input inp-cbx"
-                                    [type]="question.allowMultipleAnswers ? 'checkbox' : 'radio'"
-                                    id="{{$index}}-{{question.id}}" name="{{question.id}}" value="{{answers.answer}}">
-
-                                <label class="cbx" for="{{$index}}-{{question.id}}">
-                                    <span>
-                                        <svg width="12px" height="10px" viewbox="0 0 12 10">
-                                            <polyline points="1.5 6 4.5 9 10.5 1"></polyline>
-                                        </svg>
-                                    </span>
+                                    <label class="cbx" for="{{$index}}-{{question.id}}">
+                                        <span>
+                                            <svg width="12px" height="10px" viewbox="0 0 12 10">
+                                                <polyline points="1.5 6 4.5 9 10.5 1"></polyline>
+                                            </svg>
+                                        </span>
+                                    </label>
+                                </div>
+                                <label class="answers__title" for="{{$index}}-{{question.id}}">
+                                    <span class="answers__index">{{getAnswerLabel($index)}}.</span>
+                                    {{answers.answer}}
                                 </label>
                             </div>
-                            <label class="answers__title" for="{{$index}}-{{question.id}}">
-                                <span class="answers__index">{{getAnswerLabel($index)}}.</span>
-                                {{answers.answer}}
-                            </label>
+
+                            }
                         </div>
 
-                        }
+                    </fieldset>
+                    }
+                </div>
+                <button form="singleSurvey" type="submit" class="publish-btn btn btn--primary">
+                    <span>Complete</span>
+                    <span class="text">survey</span>
+                    <span class="add">
+                    </span>
+                </button>
+            </form>
+        </section>
+
+        <section class="results">
+            <button class="btn results__toggle">Close results</button>
+            <h3 class="results__headline">Survey results <span>LIVE</span></h3>
+
+
+            @for (question of singleSurvey().questions; track question.id; let i = $index) {
+            <section>
+                <div class="questions__wrapper">
+                    <span class="questions__counter">{{i+1}}.</span>
+                    <p class="questions__title"> {{question.question}}</p>
+                </div>
+                <div class="questions__answer-wrapper">
+                    @for (answers of question.answers; track $index) {
+                    <div class="answers results__answers">
+                        <label class="answers__title results__label" for="{{$index}}-{{question.id}}">
+                            <span class="answers__index">{{getAnswerLabel($index)}}.</span>
+                            <progress id="{{$index}}-{{question.id}}" value="{{answers.votes}}"
+                                max="{{getAllVotes(question.answers)}}">{{getPercentage(answers.votes,question.answers)}}</progress>
+                            <span class="answers__title--percentage">{{getPercentage(answers.votes,question.answers)}}%</span>
+                            <span>{{answers.votes}}</span>
+                        </label>
                     </div>
 
-                </fieldset>
-                }
-            </div>
-            <button form="singleSurvey" type="submit" class="publish-btn btn btn--primary">
-                <span>Complete</span>
-                <span class="text">survey</span>
-                <span class="add">
-                </span>
-            </button>
-        </form>
+                    }
+                </div>
+
+            </section>
+            }
+        </section>
     </main>
-
-    <section class="results">
-        <h3 class="results__headline">Survey results <span>LIVE</span></h3>
-
-
-        @for (question of singleSurvey().questions; track question.id; let i = $index) {
-                <section>
-                    <div class="questions__wrapper">
-                        <span class="questions__counter">{{i+1}}.</span>
-                        <p class="questions__title"> {{question.question}}</p>
-                    </div>
-                    <div class="questions__answer-wrapper">
-                        @for (answers of question.answers; track $index) {
-                        <div class="answers">
-                            <label class="answers__title" for="{{$index}}-{{question.id}}">
-                                <span class="answers__index">{{getAnswerLabel($index)}}.</span>
-                                {{answers.votes}}
-                            </label>
-                        </div>
-
-                        }
-                    </div>
-
-                </section>
-                }
-    </section>
 </section>
