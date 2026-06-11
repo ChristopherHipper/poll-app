@@ -4,7 +4,7 @@ import { ActivatedRoute, Router, RouterLink } from "@angular/router";
 import { Status } from "../../shared/status/status";
 import { Surveys } from '../../shared/service/surveys';
 import { DatePipe } from '@angular/common';
-import { ReactiveFormsModule } from '@angular/forms';
+import { ReactiveFormsModule, } from '@angular/forms';
 import { Answer } from '../../shared/interface/answer';
 
 @Component({
@@ -62,8 +62,13 @@ export class SurveyDetail {
     };
   };
 
-  updateSurvey() {
-    console.log('update');
+  updateSurveyVotes() {
+    const questions = this.singleSurvey().questions;
+    for (const question of questions){
+      for (const answer of question.answers){
+        this.surveyService.editSurveyVotes(answer.votes, answer.id)
+      }
+    }
   };
 
 }

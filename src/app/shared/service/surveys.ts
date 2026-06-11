@@ -89,7 +89,7 @@ export class Surveys {
 
   async addQuestion(question: Question, id: number) {
     const { data: createdQuestion, error } = await this.supabase
-      .from('Questions')
+      .from('questions')
       .insert([{
         survey_id: id,
         question: question.question,
@@ -105,7 +105,7 @@ export class Surveys {
 
   async addAnswer(answer: Answer, id: number) {
     const { data, error } = await this.supabase
-      .from('Answers')
+      .from('answers')
       .insert([{
         question_id: id,
         answer: answer.answer,
@@ -115,7 +115,12 @@ export class Surveys {
     if (error) throw error;
   };
 
-
+async editSurveyVotes(counter:number, id:number){
+      const { error } = await this.supabase
+      .from('answers')
+      .update({ votes: counter })
+      .eq('id', id)
+}
 
 
 

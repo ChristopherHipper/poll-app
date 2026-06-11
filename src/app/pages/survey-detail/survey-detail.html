@@ -30,7 +30,7 @@
             <h2 class="detail__headline">{{singleSurvey().title}}</h2>
             <p>{{singleSurvey().description}}</p>
 
-            <form id="singleSurvey" (ngSubmit)="updateSurvey()">
+            <form id="singleSurvey">
                 <div class="questions">
                     @for (question of singleSurvey().questions; track question.id; let questionIndex = $index) {
                     <fieldset>
@@ -70,7 +70,7 @@
                     </fieldset>
                     }
                 </div>
-                <button form="singleSurvey" type="submit" class="publish-btn btn btn--primary">
+                <button (click)="updateSurveyVotes()" form="singleSurvey" type="button" class="publish-btn btn btn--primary">
                     <span>Complete</span>
                     <span class="text">survey</span>
                     <span class="add">
