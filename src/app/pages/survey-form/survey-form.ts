@@ -119,7 +119,7 @@ export class SurveyForm {
 
   formSubmit() {
     if (this.surveyForm.valid) {
-      //this.surveyService.addSurvey(this.getSurvey())
+      this.surveyService.addSurvey(this.getSurvey())
       this.surveyForm.reset()
       this.showSuccessMessage.set(true);
       setTimeout(()=>{

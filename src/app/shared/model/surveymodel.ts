@@ -8,7 +8,7 @@ export class Surveymodel implements Survey {
     description: string;
     category: string;
     end_date: string;
-    rest_days: number;
+    rest_days: number | string;
     isEnded: boolean;
     questions: Question[]
 
@@ -19,8 +19,8 @@ export class Surveymodel implements Survey {
         this.description = data.description ?? "";
         this.category = data.category ?? "";
         this.end_date = data.end_date ?? "";
-        this.rest_days = data.rest_days ?? 0;
-        this.isEnded = data.isEnded ?? false;
+        this.rest_days = this.getRestDays(data.end_date) ?? 0;
+        this.isEnded = this.getState(this.getRestDays(data.end_date)) ?? false;
         this.questions = data.questions ?? []
     }
 
@@ -30,6 +30,33 @@ export class Surveymodel implements Survey {
             description: this.description,
             category: this.category,
             end_date: this.end_date,
+        }
+    }
+
+    getRestDays(end_Date: string | undefined): number | string {
+        if (end_Date) {
+            const targetDate = new Date(end_Date);
+            const dayDate = new Date();
+            const oneDay = 24 * 60 * 60 * 1000;
+            const diffInMilliseconds = targetDate.getTime() - dayDate.getTime();
+            let restDays = Math.round(diffInMilliseconds / oneDay);
+            if (restDays < 0) {
+                return 0
+            } else {
+                return restDays + 1;
+            }
+
+        } else {
+            return 'never'
+        }
+
+    };
+
+    getState(restDays: number | string): boolean {
+        if (restDays == 'never' || restDays !== 0) {
+            return false
+        } else {
+            return true
         }
     }
 

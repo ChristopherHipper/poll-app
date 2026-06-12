@@ -14,7 +14,7 @@
             <p class="card__category">{{ survey.category }}</p>
             <h4 class="card__title">{{ survey.title }}</h4>
         </div>
-        @if (survey.rest_days <= 0) { 
+        @if (survey.isEnded) { 
             <p class="card__date">ended</p>
             }@else{
             <p class="card__date">Ends {{getDay(survey.rest_days)}}</p>

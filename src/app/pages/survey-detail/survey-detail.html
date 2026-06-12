@@ -18,12 +18,12 @@
                 </button>
             </header>
             <div class="detail__info">
-                @if (singleSurvey().rest_days > 0) {
-                <p>Ends on {{singleSurvey().end_date | date:'dd.MM.yyyy'}}</p>
-                }@else if (!singleSurvey().end_date) {
+                @if (singleSurvey().rest_days == 0) {
+                <p>ended</p>
+                }@else if (singleSurvey().end_date == 'never') {
                 <p>Ends never</p>
                 }@else {
-                <p>ended</p>
+                <p>Ends on {{singleSurvey().end_date | date:'dd.MM.yyyy'}}</p>
                 }
                 <p>Category: {{singleSurvey().category}}</p>
             </div>
@@ -70,7 +70,7 @@
                     </fieldset>
                     }
                 </div>
-                <button (click)="updateSurveyVotes()" form="singleSurvey" type="button" class="publish-btn btn btn--primary">
+                <button [class.disabled]="singleSurvey().isEnded" [disabled]="singleSurvey().isEnded" (click)="updateSurveyVotes()" form="singleSurvey" type="button" class="publish-btn btn btn--primary">
                     <span>Complete</span>
                     <span class="text">survey</span>
                     <span class="add">
@@ -98,7 +98,6 @@
                             <progress id="{{$index}}-{{question.id}}" value="{{answers.votes}}"
                                 max="{{getAllVotes(question.answers)}}">{{getPercentage(answers.votes,question.answers)}}</progress>
                             <span class="answers__title--percentage">{{getPercentage(answers.votes,question.answers)}}%</span>
-                            <span>{{answers.votes}}</span>
                         </label>
                     </div>
 

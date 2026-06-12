@@ -6,7 +6,7 @@ export interface Survey {
     description: string;
     category: string;
     end_date: string;
-    rest_days: number;
+    rest_days: number | string;
     isEnded:boolean;
     questions: Question[]
 }

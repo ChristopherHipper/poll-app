@@ -371,3 +371,25 @@ progress::-webkit-progress-bar {
     border-top-right-radius: 20px;
     border-bottom-right-radius: 20px;
 }
+
+.disabled {
+    cursor: unset;
+    color: grey;
+
+    .add {
+        width: 0px;
+        height: 0px;
+    }
+
+    &:hover {
+        background-color: $secondary-orange;
+
+        @include mx.respond(md) {
+            .add {
+                width: 0px;
+                height: 0px;
+            }
+        }
+
+    }
+}

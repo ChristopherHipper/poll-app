@@ -21,38 +21,21 @@ export class Surveys {
     let { data: Surveys, error } = await this.supabase
       .from('surveys')
       .select(`*,questions (*,answers (*))`);
-
     if (error) throw error;
-    const mappedProducts = (Surveys ?? []).map(
+    const mappedSurveys = (Surveys ?? []).map(
       s => new Surveymodel(s)
     );
-    this.surveys.set(mappedProducts);
-    this.getCorrectDate();
+    this.sortAnswers(mappedSurveys)
+    this.surveys.set(mappedSurveys);
   };
 
-  getCorrectDate() {
-    this.surveys.update(surveys => surveys.map(survey => ({
-      ...survey,
-      rest_days: this.getRestDays(survey),
-      isEnded: this.getState(this.getRestDays(survey)),
-    })));
-  };
+  sortAnswers(surveys: Surveymodel[]) {
+    surveys.forEach((s) => {
+      for (const question of s.questions) {
+        question.answers.sort((a, b) => a.id - b.id);
+      }
+    })
 
-  getRestDays(survey: Survey): number {
-    const targetDate = new Date(survey.end_date);
-    const dayDate = new Date();
-    const oneDay = 24 * 60 * 60 * 1000;
-    const diffInMilliseconds = targetDate.getTime() - dayDate.getTime();
-    let restDays = Math.round(diffInMilliseconds / oneDay);
-    return restDays + 1;
-  };
-
-  getState(restDays: number): boolean {
-    if (restDays <= 0) {
-      return true
-    } else {
-      return false
-    }
   }
 
   singleSurvey = signal<Survey>({
@@ -66,11 +49,24 @@ export class Surveys {
     "questions": [],
   });
 
-  getSurveyById(id: number) {
+  async getSurveyById(id: number) {
     let currentSurvey = this.surveys().find(survey => survey.id === id);
     if (currentSurvey) {
       this.singleSurvey.set(currentSurvey);
-    };
+    } else {
+      let { data: Surveys, error } = await this.supabase
+        .from('surveys')
+        .select(`*,questions (*,answers (*))`)
+        .eq('id', id)
+      if (error) throw error;
+      const mappedSurveys = (Surveys ?? []).map(
+        s => new Surveymodel(s)
+      );
+      this.sortAnswers(mappedSurveys)
+      this.singleSurvey.set(mappedSurveys[0]);
+    }
+    console.log(this.singleSurvey());
+
   };
 
   async addSurvey(survey: Surveymodel) {
@@ -115,12 +111,12 @@ export class Surveys {
     if (error) throw error;
   };
 
-async editSurveyVotes(counter:number, id:number){
-      const { error } = await this.supabase
+  async editSurveyVotes(counter: number, id: number) {
+    const { error } = await this.supabase
       .from('answers')
       .update({ votes: counter })
       .eq('id', id)
-}
+  }
 
 
 
