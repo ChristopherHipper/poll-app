@@ -45,7 +45,8 @@
                             @for (answers of question.answers; track answers.id; let answerIndex = $index) {
                             <div class="answers">
                                 <div class="checkbox-wrapper-46">
-                                    <input (change)="updateVotes($event,answers, question.answers )" class="answers__input inp-cbx"
+                                    <input (change)="updateVotes($event,answers, question.answers )"
+                                        class="answers__input inp-cbx"
                                         [type]="question.allowMultipleAnswers ? 'checkbox' : 'radio'"
                                         id="{{$index}}-{{question.id}}" name="{{question.id}}"
                                         value="{{answers.answer}}">
@@ -70,7 +71,9 @@
                     </fieldset>
                     }
                 </div>
-                <button [class.disabled]="singleSurvey().isEnded" [disabled]="singleSurvey().isEnded" (click)="updateSurveyVotes()" form="singleSurvey" type="button" class="publish-btn btn btn--primary">
+                <button [class.disabled]="singleSurvey().isEnded" [disabled]="singleSurvey().isEnded"
+                    (click)="updateSurveyVotes()" form="singleSurvey" type="button"
+                    class="publish-btn btn btn--primary">
                     <span>Complete</span>
                     <span class="text">survey</span>
                     <span class="add">
@@ -80,10 +83,13 @@
         </section>
 
         <section class="results">
-            <button class="btn results__toggle">Close results</button>
+            <button (click)="toggleSurveyResults()" class="btn results__toggle">
+                {{surveyResultState()}} results
+                <img [src]="'assets/img/' + arrowImg() + '.png'" [alt]="arrowImg()">
+            </button>
             <h3 class="results__headline">Survey results <span>LIVE</span></h3>
 
-
+            @if (this.showResults()) {
             @for (question of singleSurvey().questions; track question.id; let i = $index) {
             <section>
                 <div class="questions__wrapper">
@@ -97,7 +103,8 @@
                             <span class="answers__index">{{getAnswerLabel($index)}}.</span>
                             <progress id="{{$index}}-{{question.id}}" value="{{answers.votes}}"
                                 max="{{getAllVotes(question.answers)}}">{{getPercentage(answers.votes,question.answers)}}</progress>
-                            <span class="answers__title--percentage">{{getPercentage(answers.votes,question.answers)}}%</span>
+                            <span
+                                class="answers__title--percentage">{{getPercentage(answers.votes,question.answers)}}%</span>
                         </label>
                     </div>
 
@@ -106,6 +113,9 @@
 
             </section>
             }
+            }
+
+
         </section>
     </main>
 </section>

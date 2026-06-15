@@ -1,6 +1,6 @@
 <section class="ending-soon-section">
     @for (survey of surveys(); track survey.id) {
-    @if (survey.rest_days > 0 && survey.rest_days < 5) { <div class="ending-soon-card" [routerLink]="['survey', survey.id]"
+    @if (isEndingSoon(survey.rest_days)) { <div class="ending-soon-card" [routerLink]="['survey', survey.id]"
         role="link">
         <div>
             <p class="ending-soon-card__category">{{ survey.category }}</p>

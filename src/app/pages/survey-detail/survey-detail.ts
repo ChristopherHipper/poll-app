@@ -19,6 +19,9 @@ export class SurveyDetail {
   surveyService = inject(Surveys);
   singleSurvey = this.surveyService.singleSurvey;
   currentAnswerId = signal(0);
+  showResults = signal(true);
+  surveyResultState = signal('Close');
+  arrowImg = signal('arrow_up')
 
 
   ngOnInit() {
@@ -70,5 +73,17 @@ export class SurveyDetail {
       }
     }
   };
+
+  toggleSurveyResults(){
+    this.showResults.set(!this.showResults())
+    if(this.showResults()){
+      this.surveyResultState.set('Close')
+      this.arrowImg.set('arrow_up')
+    } else {
+      this.surveyResultState.set('See')
+      this.arrowImg.set('arrow_down')
+    }
+    
+  }
 
 }
