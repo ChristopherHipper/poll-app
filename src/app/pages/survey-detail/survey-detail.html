@@ -31,6 +31,7 @@
             <p>{{singleSurvey().description}}</p>
 
             <form id="singleSurvey">
+                <p [class.success-show]="showSuccessMessage()" class="success-msg">Survey is completed!</p>
                 <div class="questions">
                     @for (question of singleSurvey().questions; track question.id; let questionIndex = $index) {
                     <fieldset>
@@ -89,6 +90,7 @@
             </button>
             <h3 class="results__headline">Survey results <span>LIVE</span></h3>
 
+            @if (this.singleSurvey().hasResults) {
             @if (this.showResults()) {
             @for (question of singleSurvey().questions; track question.id; let i = $index) {
             <section>
@@ -114,6 +116,13 @@
             </section>
             }
             }
+            }@else {
+                <p>Results will be shown here after participants complete the survey.</p>
+                <br>
+                <br>
+                <p>There are no answears yet.</p>
+            }
+
 
 
         </section>

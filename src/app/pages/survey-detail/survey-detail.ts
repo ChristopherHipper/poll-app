@@ -1,10 +1,10 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, inject, input, signal } from '@angular/core';
 import { Logo } from "../../shared/logo/logo";
 import { ActivatedRoute, Router, RouterLink } from "@angular/router";
 import { Status } from "../../shared/status/status";
 import { Surveys } from '../../shared/service/surveys';
 import { DatePipe } from '@angular/common';
-import { ReactiveFormsModule, } from '@angular/forms';
+import { FormBuilder, Validators, ReactiveFormsModule, FormArray, FormGroup } from '@angular/forms';
 import { Answer } from '../../shared/interface/answer';
 
 @Component({
@@ -21,7 +21,9 @@ export class SurveyDetail {
   currentAnswerId = signal(0);
   showResults = signal(true);
   surveyResultState = signal('Close');
-  arrowImg = signal('arrow_up')
+  arrowImg = signal('arrow_up');
+  showSuccessMessage = signal(false);
+  selectedAnswers:Number[] = [];
 
 
   ngOnInit() {
@@ -49,6 +51,8 @@ export class SurveyDetail {
 
   updateVotes(event: Event, answer: Answer, answers: Answer[]) {
     const input = (event.target as HTMLInputElement)
+    this.selectAnswer(input)
+    
     if (input.type == 'checkbox') {
       answer.votes += input.checked ? 1 : -1;
       return;
@@ -65,25 +69,42 @@ export class SurveyDetail {
     };
   };
 
-  updateSurveyVotes() {
-    const questions = this.singleSurvey().questions;
-    for (const question of questions){
-      for (const answer of question.answers){
-        this.surveyService.editSurveyVotes(answer.votes, answer.id)
-      }
-    }
-  };
-
-  toggleSurveyResults(){
-    this.showResults.set(!this.showResults())
-    if(this.showResults()){
-      this.surveyResultState.set('Close')
-      this.arrowImg.set('arrow_up')
-    } else {
-      this.surveyResultState.set('See')
-      this.arrowImg.set('arrow_down')
-    }
+  selectAnswer(input: HTMLInputElement){
+    if (input.checked) {
+        const answer = this.selectedAnswers.find((a) => {return a == +input.name})
+        if (!answer) {
+          this.selectedAnswers.push(+input.name)
+        }
+    } else{
+      console.log('hier');
+      
+    } 
     
   }
+
+  updateSurveyVotes() {
+    const questions = this.singleSurvey().questions;
+    for (const question of questions) {
+      for (const answer of question.answers) {
+        this.surveyService.editSurveyVotes(answer.votes, answer.id);
+      };
+    };
+    this.showSuccessMessage.set(true);
+    setTimeout(() => {
+      this.showSuccessMessage.set(false);
+      this.router.navigate(['']);
+    }, 2000);
+  };
+
+  toggleSurveyResults() {
+    this.showResults.set(!this.showResults())
+    if (this.showResults()) {
+      this.surveyResultState.set('Close');
+      this.arrowImg.set('arrow_up');
+    } else {
+      this.surveyResultState.set('See');
+      this.arrowImg.set('arrow_down');
+    };
+  };
 
 }

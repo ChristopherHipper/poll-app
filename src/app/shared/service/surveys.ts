@@ -1,5 +1,5 @@
 import { Injectable, signal } from '@angular/core';
-import { createClient } from '@supabase/supabase-js'
+import { createClient, RealtimeChannel } from '@supabase/supabase-js'
 import { Survey } from '../interface/survey';
 import { environment } from '../../../environments/environment'
 import { Surveymodel } from '../model/surveymodel';
@@ -12,9 +12,37 @@ import { Answer } from '../interface/answer';
 export class Surveys {
   supabase = createClient(environment.ApiUrl, environment.ApiKey);
   surveys = signal<Survey[]>([]);
+  surveyListChannel: RealtimeChannel;
+  //surveyUpdateChannel: RealtimeChannel;
+  singleSurvey = signal<Survey>({
+    "id": 0,
+    "title": "",
+    "description": "",
+    "category": "",
+    "end_date": "",
+    "rest_days": 0,
+    "isEnded": false,
+    "questions": [],
+    "hasResults": false
+  });
+  private reloadTimer?: ReturnType<typeof setTimeout>;
 
   constructor() {
     this.getSurveys();
+
+    this.surveyListChannel = this.supabase
+      .channel('all-changes')
+      .on('postgres_changes', {
+        event: '*',
+        schema: 'public'
+      }, payload => {
+        clearTimeout(this.reloadTimer);
+
+        this.reloadTimer = setTimeout(() => {
+          this.getSurveys();
+        }, 500);
+      })
+      .subscribe();
   };
 
   async getSurveys() {
@@ -38,17 +66,6 @@ export class Surveys {
 
   }
 
-  singleSurvey = signal<Survey>({
-    "id": 0,
-    "title": "",
-    "description": "",
-    "category": "",
-    "end_date": "",
-    "rest_days": 0,
-    "isEnded": false,
-    "questions": [],
-  });
-
   async getSurveyById(id: number) {
     let currentSurvey = this.surveys().find(survey => survey.id === id);
     if (currentSurvey) {
@@ -65,8 +82,6 @@ export class Surveys {
       this.sortAnswers(mappedSurveys)
       this.singleSurvey.set(mappedSurveys[0]);
     }
-    console.log(this.singleSurvey());
-
   };
 
   async addSurvey(survey: Surveymodel) {
@@ -116,6 +131,11 @@ export class Surveys {
       .from('answers')
       .update({ votes: counter })
       .eq('id', id)
+  }
+
+  ngOnDestroy() {
+    this.supabase.removeChannel(this.surveyListChannel)
+    //this.supabase.removeChannel(this.surveyUpdateChannel)
   }
 
 

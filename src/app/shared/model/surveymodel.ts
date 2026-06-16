@@ -10,7 +10,8 @@ export class Surveymodel implements Survey {
     end_date: string;
     rest_days: number | string;
     isEnded: boolean;
-    questions: Question[]
+    questions: Question[];
+    hasResults: boolean
 
 
     constructor(data: Partial<Survey> = {}) {
@@ -21,7 +22,18 @@ export class Surveymodel implements Survey {
         this.end_date = data.end_date ?? "";
         this.rest_days = this.getRestDays(data.end_date) ?? 0;
         this.isEnded = this.getState(this.getRestDays(data.end_date)) ?? false;
-        this.questions = data.questions ?? []
+        this.questions = data.questions ?? [];
+        this.hasResults = this.hasSurveyResults(data.questions) ?? false;
+    }
+
+    hasSurveyResults(questions: Question[] | undefined): boolean {
+        if (!questions) {
+            return false
+        } else {
+            return questions.some(question =>
+                question.answers.some(answer => answer.votes > 0)
+            );
+        }
     }
 
     getCleanJson() {
