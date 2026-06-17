@@ -23,7 +23,8 @@ export class SurveyDetail {
   surveyResultState = signal('Close');
   arrowImg = signal('arrow_up');
   showSuccessMessage = signal(false);
-  selectedAnswers:Number[] = [];
+  selectedAnswers: {question :string,counter:number}[] = [];
+  answeredAllQuestions = signal(false);
 
 
   ngOnInit() {
@@ -52,7 +53,7 @@ export class SurveyDetail {
   updateVotes(event: Event, answer: Answer, answers: Answer[]) {
     const input = (event.target as HTMLInputElement)
     this.selectAnswer(input)
-    
+
     if (input.type == 'checkbox') {
       answer.votes += input.checked ? 1 : -1;
       return;
@@ -69,17 +70,32 @@ export class SurveyDetail {
     };
   };
 
-  selectAnswer(input: HTMLInputElement){
-    if (input.checked) {
-        const answer = this.selectedAnswers.find((a) => {return a == +input.name})
-        if (!answer) {
-          this.selectedAnswers.push(+input.name)
+  selectAnswer(input: HTMLInputElement) {
+    const answer = this.selectedAnswers.find((a) => { return a.question == input.name })
+    if (!answer) {
+      this.selectedAnswers.push(
+        { question: input.name, 
+          counter: 1 
+        })
+    } else if (!input.checked && input.type === 'checkbox') {
+      const index = this.selectedAnswers.indexOf(answer)
+      if (index !== -1) {
+        this.selectedAnswers[index].counter--;
+        if (this.selectedAnswers[index].counter <= 0) {
+          this.selectedAnswers.splice(index, 1);
         }
-    } else{
-      console.log('hier');
-      
-    } 
-    
+      }
+    } else { answer.counter++ }
+    this.checkBtnDisabled()
+  }
+
+  checkBtnDisabled() {
+    if (this.selectedAnswers.length == this.singleSurvey().questions.length) {
+      this.answeredAllQuestions.set(true)
+
+    } else {
+      this.answeredAllQuestions.set(false)
+    }
   }
 
   updateSurveyVotes() {

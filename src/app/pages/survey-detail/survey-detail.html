@@ -72,7 +72,7 @@
                     </fieldset>
                     }
                 </div>
-                <button [class.disabled]="singleSurvey().isEnded" [disabled]="singleSurvey().isEnded"
+                <button [class.disabled]="singleSurvey().isEnded || !answeredAllQuestions()" [disabled]="singleSurvey().isEnded || !answeredAllQuestions()"
                     (click)="updateSurveyVotes()" form="singleSurvey" type="button"
                     class="publish-btn btn btn--primary">
                     <span>Complete</span>
