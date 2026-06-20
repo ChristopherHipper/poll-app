@@ -72,9 +72,9 @@
                     </fieldset>
                     }
                 </div>
-                <button [class.disabled]="singleSurvey().isEnded || !answeredAllQuestions()" [disabled]="singleSurvey().isEnded || !answeredAllQuestions()"
-                    (click)="updateSurveyVotes()" form="singleSurvey" type="button"
-                    class="publish-btn btn btn--primary">
+                <button [class.disabled]="singleSurvey().isEnded || !answeredAllQuestions()"
+                    [disabled]="singleSurvey().isEnded || !answeredAllQuestions()" (click)="updateSurveyVotes()"
+                    form="singleSurvey" type="button" class="publish-btn btn btn--primary">
                     <span>Complete</span>
                     <span class="text">survey</span>
                     <span class="add">
@@ -117,10 +117,10 @@
             }
             }
             }@else {
-                <p>Results will be shown here after participants complete the survey.</p>
-                <br>
-                <br>
-                <p>There are no answears yet.</p>
+            <p>Results will be shown here after participants complete the survey.</p>
+            <br>
+            <br>
+            <p>There are no answears yet.</p>
             }
 
 

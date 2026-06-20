@@ -104,6 +104,14 @@
 .error {
     color: $primary-orange;
     font-size: 14px;
+    &__answer {
+        height: 18px;
+        margin-bottom: 8px;
+
+        @include mx.respond(xxl) {
+            padding-left: 16px;
+        }
+    }
 }
 
 .error-name {
@@ -210,11 +218,7 @@
 }
 
 .input-answers {
-    margin-bottom: 8px;
-
-    @include mx.respond(lg) {}
-
-
+    margin-bottom: 0px;
 }
 
 .add-answers-wrapper {

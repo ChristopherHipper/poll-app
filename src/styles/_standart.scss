@@ -17,7 +17,35 @@ html {
     @include mx.respond(lg) {
         font-size: 24px;
     }
+}
 
+body {
+    height: 100%;
+    background-color: #262E34;
+    --sb-track-color: #35273A;
+    --sb-thumb-color: #FFB770;
+    --sb-size: 9px;
+}
+
+body::-webkit-scrollbar {
+    width: var(--sb-size);
+}
+
+body::-webkit-scrollbar-track {
+    background: var(--sb-track-color);
+    border-radius: 10px;
+}
+
+body::-webkit-scrollbar-thumb {
+    background: var(--sb-thumb-color);
+    border-radius: 10px;
+    border: 1px solid #232e33;
+}
+
+@supports not selector(::-webkit-scrollbar) {
+    body {
+        scrollbar-color: var(--sb-thumb-color) var(--sb-track-color);
+    }
 }
 
 button {

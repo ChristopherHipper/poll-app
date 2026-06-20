@@ -1,4 +1,4 @@
-import {Component, input, output, signal} from '@angular/core';
+import { Component, input, output, signal } from '@angular/core';
 import {
   CdkMenu,
   CdkMenuItem,
@@ -18,15 +18,20 @@ import { Survey } from '../interface/survey';
   styleUrl: './dropdown.scss',
 })
 export class Dropdown {
-  categries = signal<string[]>(['Team Activities', 'Health & Wellness','Gaming & Entertainment', 'Education & Learning', 'Lifestyle & Preferences', 'Technology & Innovation'])
-  selectedCategory = signal('')
-  outputCategory = output<string>()
+  categries = signal<string[]>(['Team Activities', 'Health & Wellness', 'Gaming & Entertainment', 'Education & Learning', 'Lifestyle & Preferences', 'Technology & Innovation']);
+  selectedCategory = signal('');
+  outputCategory = output<string>();
   isOpen = signal(false);
-  type = input('')
+  type = input('');
 
-  selectCategory(categorie:string){
-    this.selectedCategory.set(categorie)
-    this.outputCategory.emit(categorie)
-  }
+  /**
+ * Selects a category and emits the selected value.
+ *
+ * @param categorie - The selected category.
+ */
+  selectCategory(categorie: string) {
+    this.selectedCategory.set(categorie);
+    this.outputCategory.emit(categorie);
+  };
 
 }

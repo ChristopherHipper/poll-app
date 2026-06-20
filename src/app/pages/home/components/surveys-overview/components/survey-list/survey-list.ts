@@ -14,7 +14,6 @@ export class SurveyList {
   surveys = this.surveyService.surveys;
   sortedBy = signal<'active' | 'ended'>('active');
   category = signal('');
-
   filteredSurveys = computed(() => {
     const isEnded = this.sortedBy() === 'active' ? false : true;
     const category = this.category();
@@ -25,22 +24,37 @@ export class SurveyList {
     };
   });
 
+  /**
+ * Sets the current filter.
+ *
+ * @param filter - The filter to apply.
+ */
   setFilter(filter: 'active' | 'ended') {
     this.sortedBy.set(filter);
   };
 
+  /**
+ * Sets the selected category.
+ *
+ * @param value - The category to apply.
+ */
   sortByCategory(value: string) {
     this.category.set(value);
   };
 
-  getDay(days: number|string) {
+  /**
+* Returns the correct day label based on the given number of days.
+*
+* @param days - The number of days or a string value.
+* @returns The singular or plural day label, or `undefined` if the input is a string.
+*/
+  getDay(days: number | string) {
     if (days == 'never') {
       return ' never'
     } else if (days == 1) {
-      return 'in '+ days + ' day';
+      return 'in ' + days + ' day';
     } else {
-      return 'in '+ days + ' days';
+      return 'in ' + days + ' days';
     };
   };
-
 }

@@ -45,6 +45,21 @@
     }
 }
 
+.survey-list::-webkit-scrollbar {
+    width: 8px;
+}
+
+.survey-list::-webkit-scrollbar-track {
+    background: $dark-bg;
+    border-radius: 10px;
+}
+
+.survey-list::-webkit-scrollbar-thumb {
+    background: $primary-orange;
+    border-radius: 10px;
+    border: 1px solid #232e33;
+}
+
 .card {
     display: flex;
     flex-direction: column;

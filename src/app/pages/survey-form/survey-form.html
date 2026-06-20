@@ -94,18 +94,18 @@
                         @for (answer of getAnswers(questionindex).controls; track answer; let answerIndex = $index)
                         {
                         <li class="input-wrapper answer-input-wrapper" [formGroupName]="answerIndex">
-                            @if (invalidAnswer(questionindex, answerIndex)){
-                            <label class="error" for="question-{{questionindex}}">At least one answer is
-                                required.</label>
-                            } @else{
                             <label
                                 for="answer-{{questionindex}}-{{answerIndex}}">{{getAnswerLabel(answerIndex)}}.</label>
-                            }
                             <app-clear-button class="clear-button"
                                 (click)="removeAnswer(questionindex,answerIndex)"></app-clear-button>
                             <input class="input-answers" id="answer-{{questionindex}}-{{answerIndex}}" type="text"
                                 formControlName="answer" />
                         </li>
+                        <div class="error error__answer">
+                        @if (invalidAnswer(questionindex, answerIndex)){
+                        <p class="error error__answer">Empty answer is not allowed.</p>
+                        }
+                        </div>
                         }
                     </ul>
 
