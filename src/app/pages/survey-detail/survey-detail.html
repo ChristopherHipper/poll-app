@@ -50,7 +50,8 @@
                                         class="answers__input inp-cbx"
                                         [type]="question.allowMultipleAnswers ? 'checkbox' : 'radio'"
                                         id="{{$index}}-{{question.id}}" name="{{question.id}}"
-                                        value="{{answers.answer}}">
+                                        value="{{answers.answer}}"
+                                        [disabled]="singleSurvey().isEnded">
 
                                     <label class="cbx" for="{{$index}}-{{question.id}}">
                                         <span>
@@ -80,6 +81,9 @@
                     <span class="add">
                     </span>
                 </button>
+                @if (singleSurvey().isEnded) {
+                    <p class="closed-survey-text">Survey closed – viewing only, no submissions allowed.</p>
+                }
             </form>
         </section>
 
