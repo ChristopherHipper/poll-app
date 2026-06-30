@@ -51,7 +51,7 @@
 
 .hero-img {
     margin-top: 24px;
-    background-image: url('/assets/img/hero/hero-img.png');
+    background-image: url('../../../../../../public/assets/img/hero/hero-img.png');
     transition: 0.3s ease-in-out;
     background-position: center;
     background-repeat: no-repeat;
@@ -70,7 +70,7 @@
 
     &:hover {
         @include mx.respond(lg) {
-            background-image: url('/assets/img/hero/hero-img-hover.png');
+            background-image: url('../../../../../../public/assets/img/hero/hero-img-hover.png');
         }
 
 
@@ -93,7 +93,7 @@ app-primary-button {
 .new-survey-btn:hover {
     .add {
         @include mx.respond(md) {
-            background-image: url('/assets/img/add_circle.png');
+            background-image: url('../../../../../../public/assets/img/add_circle.png');
             background-position: center;
             background-repeat: no-repeat;
             background-size: contain;
@@ -107,7 +107,7 @@ app-primary-button {
 
 .add {
     transition: all 0.25s ease;
-    background-image: url('/assets/img/add_circle.png');
+    background-image: url('../../../../../../public/assets/img/add_circle.png');
     background-position: center;
     background-repeat: no-repeat;
     background-size: contain;

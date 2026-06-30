@@ -327,7 +327,7 @@
     &:hover {
         .add {
             @include mx.respond(md) {
-                background-image: url('/assets/img/check.png');
+                background-image: url('../../../../public/assets/img/check.png');
                 background-position: center;
                 background-repeat: no-repeat;
                 background-size: contain;
@@ -342,7 +342,7 @@
 
 .add {
     transition: all 0.25s ease;
-    background-image: url('/assets/img/check.png');
+    background-image: url('../../../../public/assets/img/check.png');
     background-position: center;
     background-repeat: no-repeat;
     background-size: contain;
