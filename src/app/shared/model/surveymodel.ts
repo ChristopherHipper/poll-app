@@ -11,7 +11,6 @@ export class Surveymodel implements Survey {
     rest_days: number | string;
     isEnded: boolean;
     questions: Question[];
-    hasResults: boolean
 
 
     constructor(data: Partial<Survey> = {}) {
@@ -23,24 +22,7 @@ export class Surveymodel implements Survey {
         this.rest_days = this.getRestDays(data.end_date) ?? 0;
         this.isEnded = this.getState(this.getRestDays(data.end_date)) ?? false;
         this.questions = data.questions ?? [];
-        this.hasResults = this.hasSurveyResults(data.questions) ?? false;
     }
-
-    /**
- * Checks whether a survey contains any results (votes > 0).
- *
- * @param questions - The list of questions.
- * @returns True if at least one answer has votes, otherwise false.
- */
-    hasSurveyResults(questions: Question[] | undefined): boolean {
-        if (!questions) {
-            return false;
-        } else {
-            return questions.some(question =>
-                question.answers.some(answer => answer.votes > 0)
-            );
-        };
-    };
 
     /**
  * Returns a sanitized JSON representation of the survey.

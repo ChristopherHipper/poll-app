@@ -94,7 +94,7 @@
             </button>
             <h3 class="results__headline">Survey results <span>LIVE</span></h3>
 
-            @if (this.singleSurvey().hasResults) {
+            
             @if (this.showResults()) {
             @for (question of singleSurvey().questions; track question.id; let i = $index) {
             <section>
@@ -109,8 +109,7 @@
                             <span class="answers__index">{{getAnswerLabel($index)}}.</span>
                             <progress id="{{$index}}-{{question.id}}" value="{{answers.votes}}"
                                 max="{{getAllVotes(question.answers)}}">{{getPercentage(answers.votes,question.answers)}}</progress>
-                            <span
-                                class="answers__title--percentage">{{getPercentage(answers.votes,question.answers)}}%</span>
+                            <span class="answers__title--percentage">{{getPercentage(answers.votes,question.answers)}}%</span>
                         </label>
                     </div>
 
@@ -119,12 +118,6 @@
 
             </section>
             }
-            }
-            }@else {
-            <p>Results will be shown here after participants complete the survey.</p>
-            <br>
-            <br>
-            <p>There are no answears yet.</p>
             }
 
 

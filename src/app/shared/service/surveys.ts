@@ -22,7 +22,6 @@ export class Surveys {
     "rest_days": 0,
     "isEnded": false,
     "questions": [],
-    "hasResults": false
   });
   private reloadTimer?: ReturnType<typeof setTimeout>;
 

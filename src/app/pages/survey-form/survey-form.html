@@ -36,8 +36,17 @@
                     </fieldset>
                     <div>
                         <app-dropdown [type]="'Choose Category'" (outputCategory)="getCategory($event)"></app-dropdown>
+                        @if (invalidCategory){
+                        <p class="error error-name error__category" for="category">Select a category.</p>
+                        }@else {
+                            <p class="error error-name error__category" for="category"></p>
+                        }
                         <fieldset class="input-wrapper label-date">
+                            @if (invalidDate){
+                            <label class="error error-name" for="date">Select a valid date.</label>
+                            } @else{
                             <label for="end_date">Set end date (optional)</label>
+                            }
                             <app-clear-button class="clear-button" (click)="clearField('end_date')"></app-clear-button>
                             <input class="input-date" id="end_date" type="date" formControlName="end_date" />
                         </fieldset>
@@ -102,9 +111,9 @@
                                 formControlName="answer" />
                         </li>
                         <div class="error error__answer">
-                        @if (invalidAnswer(questionindex, answerIndex)){
-                        <p class="error error__answer">Empty answer is not allowed.</p>
-                        }
+                            @if (invalidAnswer(questionindex, answerIndex)){
+                            <p class="error error__answer">Empty answer is not allowed.</p>
+                            }
                         </div>
                         }
                     </ul>
@@ -140,7 +149,7 @@
             </button>
         </form>
 
-        <button [class.disabled]="!surveyForm.valid" [disabled]="!surveyForm.valid" form="surveyForm" type="submit"
+        <button [class.disabled]="!surveyForm.valid" form="surveyForm" type="submit"
             class="publish-btn btn btn--primary">
             <span>Publish</span>
             <span class="add">

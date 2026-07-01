@@ -8,6 +8,7 @@ import { Dropdown } from "../../shared/dropdown/dropdown";
 import { ClearButton } from "../../shared/buttons/clear-button/clear-button";
 import { Surveys } from '../../shared/service/surveys';
 import { Surveymodel } from '../../shared/model/surveymodel';
+import { LessThanToday } from '../../shared/form-validators/validators';
 
 @Component({
   selector: 'app-survey-form',
@@ -23,9 +24,9 @@ export class SurveyForm {
   surveyService = inject(Surveys);
 
   surveyForm = this.formbuilder.nonNullable.group({
-    title: ['', [Validators.required]],
+    title: ['', [Validators.required, Validators.minLength(4), Validators.pattern(/^(\s+\S+\s*)*(?!\s).*$/)]],
     description: [''],
-    end_date: [''],
+    end_date: ['', [LessThanToday()]],
     category: ['', [Validators.required]],
     questions: this.formbuilder.array([
       this.createQuestion()
@@ -58,7 +59,7 @@ export class SurveyForm {
  */
   createQuestion(): FormGroup {
     return this.formbuilder.group({
-      question: ['', [Validators.required]],
+      question: ['', [Validators.required, Validators.minLength(4), Validators.pattern(/^(\s+\S+\s*)*(?!\s).*$/)]],
       allowMultipleAnswers: [false],
       answers: this.formbuilder.array([
         this.createAnswer(),
@@ -74,7 +75,7 @@ export class SurveyForm {
  */
   createAnswer(): FormGroup {
     return this.formbuilder.group({
-      answer: ['', { nonNullable: true, validators: [Validators.required] }]
+      answer: ['', { nonNullable: true, validators: [Validators.required, Validators.minLength(4), Validators.pattern(/^(\s+\S+\s*)*(?!\s).*$/)] }]
     });
   };
 
@@ -174,6 +175,24 @@ export class SurveyForm {
   };
 
   /**
+* Indicates whether the survey date field is invalid and has been touched.
+*
+* @returns True if the date is invalid and touched, otherwise false.
+*/
+  get invalidDate() {
+    return !this.surveyForm.get('end_date')?.valid && this.surveyForm.get('end_date')?.touched;
+  };
+
+  /**
+* Indicates whether the survey date field is invalid and has been touched.
+*
+* @returns True if the date is invalid and touched, otherwise false.
+*/
+  get invalidCategory() {
+    return !this.surveyForm.get('category')?.valid && this.surveyForm.get('category')?.touched;
+  };
+
+  /**
  * Checks whether a question is invalid and has been touched.
  *
  * @param index - The index of the question.
@@ -208,7 +227,10 @@ export class SurveyForm {
  * Submits the survey form if valid, saves the survey, and redirects after success.
  */
   formSubmit() {
-    if (this.surveyForm.valid) {
+    if (this.surveyForm.invalid) {
+      this.surveyForm.markAllAsTouched();
+      return;
+    } else {
       this.surveyService.addSurvey(this.getSurvey())
       this.surveyForm.reset();
       this.showSuccessMessage.set(true);

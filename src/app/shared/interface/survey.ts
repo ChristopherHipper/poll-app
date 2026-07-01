@@ -9,5 +9,4 @@ export interface Survey {
     rest_days: number | string;
     isEnded:boolean;
     questions: Question[];
-    hasResults: boolean
 }

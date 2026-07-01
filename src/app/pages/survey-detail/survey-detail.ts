@@ -33,6 +33,8 @@ export class SurveyDetail {
     const currentid = this.route.snapshot.paramMap.get('id');
     if (!currentid) return;
     this.surveyService.getSurveyById(+currentid);
+    console.log(this.singleSurvey());
+    
   };
 
   /**
@@ -54,7 +56,12 @@ export class SurveyDetail {
  */
   getPercentage(votes: number, answers: Answer[]): number {
     const percentage = 100 * votes / this.getAllVotes(answers);
-    return Math.round(percentage);
+    if (percentage) {
+      return Math.round(percentage);
+    } else {
+      return 0
+    }
+    
   };
 
   /**
